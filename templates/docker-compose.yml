@@ -1,0 +1,184 @@
+version: '3'
+
+services:
+  {% if render_features['postgresql'] %}
+  # PostgreSQL database
+  postgres:
+    restart: always
+    image: postgres
+    environment:
+      - POSTGRES_USER=${ENV_POSTGRES_DB_USER}
+      - POSTGRES_PASSWORD=${ENV_POSTGRES_DB_PASSWORD}
+      - POSTGRES_DB=${ENV_POSTGRES_DB_NAME}
+    ports:
+      - "5432:5432"
+  {% endif %}
+
+
+  {% if render_features['django'] %}
+  # Django REST framework
+  django:
+    restart: always
+    build:
+      context: ./django/
+    command: sh /django/run_django.sh
+    expose:
+      - "8000"
+    links:
+      {% if render_features['postgresql'] %}
+      - postgres
+      {% endif %}
+      {% if render_features['redis-rabbit'] %}
+      - rabbit
+      - redis
+      {% endif %}
+    depends_on:
+      {% if render_features['postgresql'] %}
+      - postgres
+      {% endif %}
+    environment:
+      - ENV_DJANGO_DEBUG=${ENV_DJANGO_DEBUG}
+      - ENV_DJANGO_SECRET_KEY=${ENV_DJANGO_SECRET_KEY}
+      - ENV_DJANGO_ADMIN_USER=${ENV_DJANGO_ADMIN_USER}
+      - ENV_DJANGO_ADMIN_EMAIL=${ENV_DJANGO_ADMIN_EMAIL}
+      - ENV_DJANGO_ADMIN_PASSWORD=${ENV_DJANGO_ADMIN_PASSWORD}
+      {% if render_features['django-socialauth'] %}
+      - ENV_DJANGO_SOCIALAUTH_CLIENT_ID=${ENV_DJANGO_SOCIALAUTH_CLIENT_ID}
+      - ENV_DJANGO_SOCIALAUTH_CLIENT_SECRET=${ENV_DJANGO_SOCIALAUTH_CLIENT_SECRET}
+      - ENV_DJANGO_SOCIALAUTH_FACEBOOK_APP_SECRET=${ENV_DJANGO_SOCIALAUTH_FACEBOOK_APP_SECRET}
+      {% endif %}
+      {% if render_features['postgresql'] %}
+      - ENV_POSTGRES_DB_NAME=${ENV_POSTGRES_DB_NAME}
+      - ENV_POSTGRES_DB_USER=${ENV_POSTGRES_DB_USER}
+      - ENV_POSTGRES_DB_PASSWORD=${ENV_POSTGRES_DB_PASSWORD}
+      {% endif %}
+      {% if render_features['redis-rabbit'] %}
+      - ENV_RABBIT_USER=${ENV_RABBIT_USER}
+      - ENV_RABBIT_PASSWORD=${ENV_RABBIT_PASSWORD}
+      {% endif %}
+  {% endif %}
+
+
+  # {% if render_features['celery'] %}
+  # # Celery worker
+  # worker:
+  #   restart: always
+  #   build:
+  #     context: ./django/
+  #   command: sh /django/run_celery.sh
+  #   links:
+  #     - postgres
+  #     - rabbit
+  #     - redis
+  #   depends_on:
+  #     - rabbit
+  #   environment:
+  #     - ENV_DJANGO_DEBUG=${ENV_DJANGO_DEBUG}
+  #     - ENV_DJANGO_SECRET_KEY=${ENV_DJANGO_SECRET_KEY}
+  #     {% if render_features['postgresql'] %}
+  #     - ENV_POSTGRES_DB_NAME=${ENV_POSTGRES_DB_NAME}
+  #     - ENV_POSTGRES_DB_USER=${ENV_POSTGRES_DB_USER}
+  #     - ENV_POSTGRES_DB_PASSWORD=${ENV_POSTGRES_DB_PASSWORD}
+  #     {% endif %}
+  #     {% if render_features['redis-rabbit'] %}
+  #     - ENV_RABBIT_USER=${ENV_RABBIT_USER}
+  #     - ENV_RABBIT_PASSWORD=${ENV_RABBIT_PASSWORD}
+  #     {% endif %}
+  # {% endif %}
+
+
+  {% if render_features['redis-rabbit'] %}
+  # Redis results backend
+  redis:
+    restart: always
+    image: redis
+
+  # RabbitMQ message broker
+  rabbit:
+    restart: always
+    image: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=${ENV_RABBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${ENV_RABBIT_PASSWORD}
+    ports:
+      - "5672:5672"    # for debugging
+      - "15672:15672"  # for management plugin
+  {% endif %}
+
+
+  {% if render_features['nginx'] %}
+  # Nginx
+  nginx:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    links:
+      {% if render_features['django'] %}
+      - django
+      {% endif %}
+    depends_on:
+      {% if render_features['django'] %}
+      - django
+      {% endif %}
+    tty: true
+  {% endif %}
+
+
+  {% if render_features['https-portal'] %}
+  # https-portal
+  https-portal:
+    image: steveltn/https-portal
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - nginx
+    links:
+      - nginx
+    environment:
+      - DOMAINS={{ FS_DOMAIN }} -> http://nginx:80
+      - STAGE=${ENV_HTTPS_PORTAL_STAGE}
+  {% endif %}
+
+
+  {% if render_features['noip'] %}
+  # noip
+  noip:
+    restart: always
+    build:
+      context: ./noip/
+    environment:
+      - USERNAME=${ENV_NOIP_USER}
+      - PASSWORD=${ENV_NOIP_PASSWORD}
+      - INTERVAL=${ENV_NOIP_INTERVAL}
+  {% endif %}
+
+
+  {% if render_features['mongodb'] %}
+  # mongoDB
+  mongo:
+    build:
+      context: ./mongo/
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: ${ENV_MONGO_DATABASE_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${ENV_MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${ENV_MONGO_ROOT_PASSWORD}
+  {% endif %}
+
+
+  {% if render_features['mongo-express'] %}
+  # admin interface
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${ENV_MONGO_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${ENV_MONGO_ROOT_PASSWORD}
+
+      ME_CONFIG_BASICAUTH_USERNAME: ${ENV_MONGO_EXPRESS_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ENV_MONGO_EXPRESS_PASSWORD}
+  {% endif %}

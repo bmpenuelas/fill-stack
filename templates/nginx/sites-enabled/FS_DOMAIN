@@ -1,0 +1,36 @@
+server {
+  listen 80 default_server;
+  server_name www.{{ FS_DOMAIN }} {{ FS_DOMAIN }};
+  index index.html;
+
+  location / {
+    root /usr/share/nginx/html;
+    try_files $uri $uri/ /index.html;
+
+    # proxy_pass aws_s3_uri;
+    # proxy_http_version 1.1;
+
+    proxy_intercept_errors on;
+    error_page 404 /index.html;
+
+    proxy_set_header          Host            $http_host;
+    proxy_set_header          X-Real-IP       $remote_addr;
+    proxy_set_header          X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
+  {% if render_features['django'] %}
+  location /{{ FS_API_PATH }}/ {
+    proxy_set_header          Host            $http_host;
+    proxy_set_header          X-Real-IP       $remote_addr;
+    proxy_set_header          X-Forwarded-For $proxy_add_x_forwarded_for;
+
+    proxy_redirect off;
+    proxy_pass http://django:8000/{{ FS_API_PATH }}/;
+    proxy_http_version 1.1;
+    proxy_redirect http://django:8000/{{ FS_API_PATH }}/ http://django:8000/{{ FS_API_PATH }}/;
+    proxy_read_timeout 60s;
+
+  }
+  {% endif %}
+
+}

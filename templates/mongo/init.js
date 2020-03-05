@@ -1,0 +1,1 @@
+print(db.{{ FS_MONGO_EXAMPLE_COLLECTION }}.insert({ {{ FS_MONGO_EXAMPLE_FIELD }}: '{{ FS_MONGO_EXAMPLE_VALUE }}' }))

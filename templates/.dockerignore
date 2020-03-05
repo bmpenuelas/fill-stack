@@ -1,0 +1,3 @@
+{% if render_features['vue'] %}
+**/node_modules/
+{% endif %}
