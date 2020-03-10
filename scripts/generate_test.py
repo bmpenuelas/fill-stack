@@ -1,9 +1,3 @@
-###############################################################################
-#
-# WARNING! Run this script from the project root directory.
-#
-###############################################################################
-
 import sys
 import json
 import subprocess
@@ -12,7 +6,6 @@ from   shutil   import copyfile
 from   os       import chdir
 from   os.path  import abspath, join, isfile, dirname
 from   argparse import ArgumentParser
-
 
 root_path = abspath(join(dirname(abspath(__file__)),'..'))
 sys.path.append(root_path)
