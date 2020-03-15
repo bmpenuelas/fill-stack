@@ -6,7 +6,7 @@ import subprocess
 
 from   os      import path, mkdir, makedirs
 from   os.path import normpath, dirname
-from   shutil  import copyfile
+from   shutil  import copyfile, copytree, rmtree
 from   pathlib import Path
 from   jinja2  import Environment, FileSystemLoader, Template, StrictUndefined
 
@@ -34,7 +34,7 @@ def randomString(stringLength=10):
     return ''.join(random.choice(letters) for i in range(stringLength))
 
 
-def run_cmd_command(cmd, get_lines=False):
+def run_cmd(cmd, get_lines=False):
     ''' Run a command in the shell and return the output. '''
 
     result = subprocess.run(cmd, stdout=subprocess.PIPE)
@@ -111,8 +111,9 @@ def gen_files(required_files, selected_features, selected_keywords, output_path)
         output_path (str)
     """
 
-    if not path.exists(output_path):
-        mkdir(output_path)
+    if path.exists(output_path):
+        rmtree(output_path)
+    makedirs(output_path)
 
     file_loader = FileSystemLoader(TEMPLATE_PATH)
     jinja_env = Environment(loader=file_loader, trim_blocks=True, lstrip_blocks=True)
@@ -134,3 +135,6 @@ def gen_files(required_files, selected_features, selected_keywords, output_path)
                 template = jinja_env.get_template(required_file)
                 templated_file = template.render(template_values)
                 output_file.write(templated_file)
+
+    generated_original_path = path.join(output_path, '.generated_original')
+    copytree(output_path, generated_original_path)

@@ -130,4 +130,4 @@ dmypy.json
 
 # dev folders
 .templated/
-.webapp_generated/
+.generated_webapp/

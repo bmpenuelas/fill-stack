@@ -9,7 +9,7 @@ from   argparse import ArgumentParser
 
 root_path = abspath(join(dirname(abspath(__file__)),'..'))
 sys.path.append(root_path)
-from   generator.generator import run_cmd_command
+from   generator.generator import run_cmd
 from   generator.tests     import tests
 
 
@@ -66,7 +66,7 @@ args_dict = vars(args)
 if args_dict['clean']:
     # Clean all generated files
     cmd_clean = ['git', 'clean', '-fdX']
-    run_cmd_command(cmd_clean, True)
+    run_cmd(cmd_clean, True)
 
 else:
     # Generate files
@@ -83,15 +83,15 @@ else:
         if args_dict['code']:
             # Open directory in VSCode
             cmd_code = ['code', templated_path]
-            run_cmd_command(cmd_code)
+            run_cmd(cmd_code)
 
         elif args_dict['down'] or args_dict['down_run'] or args_dict['run']:
             # Optionally run
             chdir(templated_path)
             if args_dict['down'] or args_dict['down_run']:
                 cmd_docker_compose_down = ['docker-compose', 'down']
-                print(run_cmd_command(cmd_docker_compose_down))
+                print(run_cmd(cmd_docker_compose_down))
 
             if args_dict['run'] or args_dict['down_run']:
                 cmd_docker_compose_restart = ['docker-compose', 'up', '-d', '--no-deps', '--build']
-                print(run_cmd_command(cmd_docker_compose_restart))
+                print(run_cmd(cmd_docker_compose_restart))

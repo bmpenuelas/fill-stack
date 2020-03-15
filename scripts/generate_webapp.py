@@ -46,7 +46,7 @@ args_dict = vars(args)
 if args_dict['clean']:
     # Clean all generated files
     cmd_clean = ['git', 'clean', '-fdX']
-    generator.run_cmd_command(cmd_clean, True)
+    generator.run_cmd(cmd_clean, True)
 
 else:
     ###########################################################################
@@ -73,7 +73,7 @@ else:
     ###########################################################################
 
     output_path = path.normpath(
-        path.join(generator.BASE_PATH, '..', '.webapp_generated')
+        path.join(generator.BASE_PATH, '..', '.generated_webapp')
     )
     if path.exists(output_path):
         rmtree(output_path)

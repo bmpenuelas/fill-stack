@@ -20,7 +20,7 @@ from   generator.generator import ( BASE_PATH,
                                     get_required_files,
                                     get_templated,
                                     gen_files,
-                                    run_cmd_command,
+                                    run_cmd,
                                   )
 
 
