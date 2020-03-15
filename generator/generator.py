@@ -115,10 +115,22 @@ def gen_files(required_files, selected_features, selected_keywords, output_path)
         rmtree(output_path)
     makedirs(output_path)
 
+    # Save the config used to generate
+    config = {
+        'selected_features': selected_features,
+        'selected_keywords': selected_keywords,
+    }
+    config_path = path.join(output_path, '.fill-stack.config')
+    with open(config_path, "w") as config_file:
+        config_file.write(json.dumps(config, indent=4, sort_keys=True))
+
+    # Create templated versions of the files that are needed
     file_loader = FileSystemLoader(TEMPLATE_PATH)
     jinja_env = Environment(loader=file_loader, trim_blocks=True, lstrip_blocks=True)
     jinja_env.undefined = StrictUndefined
-    selected_keywords.update({k: v(selected_keywords) for k, v in config_feature_keywords_derived.items()})
+    selected_keywords.update(
+        {k: v(selected_keywords) for k, v in config_feature_keywords_derived.items()}
+    )
     template_values = selected_keywords
     template_values['render_features'] = {feature: feature in selected_features for feature in ALL_FEATURES}
 
@@ -136,5 +148,7 @@ def gen_files(required_files, selected_features, selected_keywords, output_path)
                 templated_file = template.render(template_values)
                 output_file.write(templated_file)
 
+    # Save a copy of the generated files to be able to generate patches
+    # for future updates
     generated_original_path = path.join(output_path, '.generated_original')
     copytree(output_path, generated_original_path)
