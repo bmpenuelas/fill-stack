@@ -6,7 +6,7 @@ from   os.path   import abspath, join, dirname
 from   shutil    import rmtree
 from   random    import Random
 
-root_path = abspath(join(dirname(abspath(__file__)),'..'))
+root_path = abspath(join(dirname(abspath(__file__)), '..'))
 sys.path.append(root_path)
 from   generator.generator import ( BASE_PATH,
                                     TEMPLATE_PATH,
@@ -31,7 +31,7 @@ def create_TestGenerateFiles(seed):
     gen_seed = random.randint(0, 2^32-1)
 
     class TCGenerateFiles(unittest.TestCase):
-        OUTPUT_PATH = path.normpath(path.join(root_path, '.templated'))
+        OUTPUT_PATH = path.normpath(path.join(root_path, '..', '.generated_test'))
         seed = gen_seed
 
         def setUp(self):
@@ -39,7 +39,10 @@ def create_TestGenerateFiles(seed):
                 rmtree(self.OUTPUT_PATH)
 
         def test_all_features_selected(self):
-            selected_keywords = {keyword: keyword for keyword in ALL_KEYWORDS}
+            selected_keywords = {
+                keyword: keyword for keyword in ALL_KEYWORDS
+                if not config_feature_keywords[keyword]['environment']
+            }
 
             # Force values
             for invalid_keyword in find_invalid_keywords(selected_keywords):

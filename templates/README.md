@@ -10,7 +10,7 @@ The file `.env` in the root directory contains all your production secrets. Make
 
 
 
-{% if render_features['aws-docker-machine'] %}
+{% if render_features['django'] %}
 ## Django-REST
 ### Django + REST framework
 
@@ -37,8 +37,8 @@ Example, for *login with Facebook*
 - Choose ENV_DJANGO_SOCIALAUTH_CLIENT_ID (*recommended 40 characters long*) and ENV_DJANGO_SOCIALAUTH_CLIENT_SECRET (*recommended 128 characters long*)
 
 - Create an app at [developers.facebook](https://developers.facebook.com/apps/). There, you get:
-    - DJANGO_SOCIALAUTH_FACEBOOK_APP_ID
-    - ENV_DJANGO_SOCIALAUTH_FACEBOOK_APP_SECRET
+    - DJANGO_SOCIALAUTH_FACEBOOK_APP_ID : ID is public, add this to the generator settings.
+    - ENV_DJANGO_SOCIALAUTH_FACEBOOK_APP_SECRET : Keep this secret, add it manually to your .env file after the webapp is generated.
 
 - For testing, you can get a debug [User Token](https://developers.facebook.com/tools/accesstoken/)
 

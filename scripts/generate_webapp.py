@@ -22,14 +22,14 @@ parser = ArgumentParser(
 
 # Optional arguments
 parser.add_argument(
-    '-f', '--features', dest='features',
-    default=join(root_path, 'scripts/webapp_features.json'),
-    help='JSON file with the selected features.'
+    '-f', '--settings', dest='settings',
+    default=join(root_path, 'scripts/webapp_settings.json'),
+    help='JSON file with the selected settings (features and keywords).'
 )
 parser.add_argument(
-    '-k', '--keywords', dest='keywords',
-    default=join(root_path, 'scripts/webapp_keywords.json'),
-    help='JSON file with the keyword values for the selected features.'
+    '-o', '--output', dest='output',
+    default=path.join(generator.BASE_PATH, '..', '.generated_webapp'),
+    help='Path for the generated output files.'
 )
 parser.add_argument(
     '-cl', '--clean', dest='clean',
@@ -53,28 +53,22 @@ else:
     # CONFIG
     ###########################################################################
 
-    with open(args_dict['features'], 'r') as features_file:
-        features = json.load(features_file)
-        features = [feature for feature in features.keys() if features[feature]]
-
-    with open(args_dict['keywords'], 'r') as keywords_file:
-        keywords = json.load(keywords_file)
+    with open(args_dict['settings'], 'r') as settings_file:
+        settings = json.load(settings_file)
+        features = settings['selected_features']
+        keywords = settings['selected_keywords']
 
     missing_keywords = generator.find_missing_keywords(features, keywords)
     for keyword in missing_keywords:
-        if generator.config_feature_keywords[keyword]['environment']:
-            keywords[keyword] = keyword.lower() + generator.randomString(10)
-        else:
-            raise ValueError('Invalid value for ' +  keyword)
+        if not generator.config_feature_keywords[keyword]['environment']:
+            raise ValueError('Missing value for ' +  keyword)
 
 
     ###########################################################################
     # Generate
     ###########################################################################
 
-    output_path = path.normpath(
-        path.join(generator.BASE_PATH, '..', '.generated_webapp')
-    )
+    output_path = args_dict['output']
     if path.exists(output_path):
         rmtree(output_path)
 
@@ -83,7 +77,8 @@ else:
             generator.get_required_files(features),
             features,
             keywords,
-            output_path
+            output_path,
+            True
         )
     else:
         print('Error found when checking the required keywords.')

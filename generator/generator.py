@@ -56,6 +56,15 @@ def get_required_keywords(selected_features):
     return required_keywords
 
 
+def get_required_env_vars(selected_features):
+    """ Get the keywords that are to be chosen according to the selected features """
+
+    required_keywords = get_required_keywords(selected_features)
+    required_env_vars = [var for var in required_keywords if config_feature_keywords[var]['environment']]
+
+    return required_env_vars
+
+
 def find_invalid_keywords(selected_keywords):
     """ Find whether any of the chosen keywords does not meet the defined regex """
 
@@ -66,7 +75,7 @@ def check_required_keywords(selected_features, selected_keywords):
     """ Find whether any of the needed keywords has not been chosen """
 
     required_keywords = get_required_keywords(selected_features)
-    return all([item in selected_keywords.keys() for item in required_keywords])
+    return all([item in selected_keywords.keys() for item in required_keywords if not config_feature_keywords[item]['environment']])
 
 
 def find_missing_keywords(selected_features, selected_keywords):
@@ -97,7 +106,22 @@ def get_templated(template, parameters):
     return template.render(parameters)
 
 
-def gen_files(required_files, selected_features, selected_keywords, output_path):
+def gen_env_template(selected_features, output_path=None):
+    """ Get the given template filled with the chosen keywords """
+
+    required_env_vars = get_required_env_vars(selected_features)
+    env_template = ''
+    for var in required_env_vars:
+        env_template += var + '=' + (config_feature_keywords[var]['default'] \
+            if not config_feature_keywords[var]['secret'] else '') + '\n'
+    if output_path:
+        with open(output_path, 'w') as output_file:
+            output_file.write(env_template)
+    else:
+        return env_template
+
+
+def gen_files(required_files, selected_features, selected_keywords, output_path, first_generation=False):
     """Generate templated files for selected features.
 
     Args:
@@ -120,7 +144,7 @@ def gen_files(required_files, selected_features, selected_keywords, output_path)
         'selected_features': selected_features,
         'selected_keywords': selected_keywords,
     }
-    config_path = path.join(output_path, '.fill-stack.config')
+    config_path = path.join(output_path, '.fill-stack_config.json')
     with open(config_path, "w") as config_file:
         config_file.write(json.dumps(config, indent=4, sort_keys=True))
 
@@ -148,7 +172,11 @@ def gen_files(required_files, selected_features, selected_keywords, output_path)
                 templated_file = template.render(template_values)
                 output_file.write(templated_file)
 
-    # Save a copy of the generated files to be able to generate patches
-    # for future updates
-    generated_original_path = path.join(output_path, '.generated_original')
-    copytree(output_path, generated_original_path)
+    if first_generation:
+        # Save a copy of the generated files to be able to generate patches
+        # for future updates
+        generated_last_path = path.join(output_path, '.generated_last')
+        copytree(output_path, generated_last_path)
+        gen_env_template(selected_features, path.join(generated_last_path, '.env'))
+    else:
+        return gen_env_template(selected_features)

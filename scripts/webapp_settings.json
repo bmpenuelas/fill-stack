@@ -1,0 +1,37 @@
+{
+    "selected_features": [
+        "django",
+        "django-gunicorn",
+        "django-postgresql",
+        "django-jwt",
+        "django-socialauth",
+        "django-celery",
+        "django-redis-rabbit",
+        "postgresql",
+        "celery",
+        "redis-rabbit",
+        "mongodb",
+        "mongo-express",
+        "nginx",
+        "https-portal",
+        "dev-hosts",
+        "noip",
+        "vue",
+        "vue-socialauth",
+        "aws-docker-machine"
+    ],
+    "selected_keywords": {
+        "FS_API_PATH": "api",
+        "FS_DJANGO_APP_NAME": "webapp",
+        "FS_DJANGO_PROJECT_NAME": "fillstack",
+        "FS_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID": "2620267571539953",
+        "FS_DOCKER_USERNAME": "docker_fs_user",
+        "FS_DOMAIN": "fill-stack.com",
+        "FS_MONGO_EXAMPLE_COLLECTION": "FS_MONGO_EXAMPLE_COLLECTION",
+        "FS_MONGO_EXAMPLE_FIELD": "FS_MONGO_EXAMPLE_FIELD",
+        "FS_MONGO_EXAMPLE_VALUE": "FS_MONGO_EXAMPLE_VALUE",
+        "FS_PRODUCT_NAME": "fill-stack",
+        "FS_REDIS_PORT": "6379",
+        "FS_VUE_PROJECT_NAME": "FS_VUE_PROJECT_NAME"
+    }
+}
