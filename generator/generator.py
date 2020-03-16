@@ -135,9 +135,8 @@ def gen_files(required_files, selected_features, selected_keywords, output_path,
         output_path (str)
     """
 
-    if path.exists(output_path):
-        rmtree(output_path)
-    makedirs(output_path)
+    if not path.exists(output_path):
+        makedirs(output_path)
 
     # Save the config used to generate
     config = {
