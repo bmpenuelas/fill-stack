@@ -69,7 +69,7 @@ def create_TestGenerateFiles(seed):
             files_to_generate = list(templated_paths.keys())
             self.assertEqual(files_to_generate, ALL_FILES)
 
-            gen_files(required_files, selected_features, selected_keywords, self.OUTPUT_PATH)
+            gen_files(required_files, selected_features, selected_keywords, self.OUTPUT_PATH, True)
 
             template_tree = []
             for root, dirs, files in walk(TEMPLATE_PATH):

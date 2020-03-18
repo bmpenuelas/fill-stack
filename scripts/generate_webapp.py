@@ -2,8 +2,8 @@ import sys
 import json
 
 from   shutil    import copyfile, rmtree
-from   os        import chdir, getcwd, path
-from   os.path   import abspath, join, isfile, dirname
+from   os        import chdir, getcwd, path, listdir
+from   os.path   import abspath, join, isfile, dirname, exists
 from   argparse  import ArgumentParser
 
 root_path = abspath(join(dirname(abspath(__file__)),'..'))
@@ -22,7 +22,7 @@ parser = ArgumentParser(
 
 # Optional arguments
 parser.add_argument(
-    '-f', '--settings', dest='settings',
+    '-s', '--settings', dest='settings',
     default=join(root_path, 'scripts/webapp_settings.json'),
     help='JSON file with the selected settings (features and keywords).'
 )
@@ -43,6 +43,9 @@ args = parser.parse_args()
 args_dict = vars(args)
 
 
+###########################################################################
+# CLEAN
+###########################################################################
 if args_dict['clean']:
     # Clean all generated files
     cmd_clean = ['git', 'clean', '-fdX']
@@ -78,7 +81,6 @@ else:
             features,
             keywords,
             output_path,
-            True
         )
     else:
         print('Error found when checking the required keywords.')

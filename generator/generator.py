@@ -121,7 +121,7 @@ def gen_env_template(selected_features, output_path=None):
         return env_template
 
 
-def gen_files(required_files, selected_features, selected_keywords, output_path, first_generation=False):
+def gen_files(required_files, selected_features, selected_keywords, output_path):
     """Generate templated files for selected features.
 
     Args:
@@ -171,11 +171,4 @@ def gen_files(required_files, selected_features, selected_keywords, output_path,
                 templated_file = template.render(template_values)
                 output_file.write(templated_file)
 
-    if first_generation:
-        # Save a copy of the generated files to be able to generate patches
-        # for future updates
-        generated_last_path = path.join(output_path, '.generated_last')
-        copytree(output_path, generated_last_path)
-        gen_env_template(selected_features, path.join(generated_last_path, '.env'))
-    else:
-        return gen_env_template(selected_features)
+    gen_env_template(selected_features, path.join(output_path, '.env'))
