@@ -112,7 +112,7 @@ def gen_env_template(selected_features, output_path=None):
     required_env_vars = get_required_env_vars(selected_features)
     env_template = ''
     for var in required_env_vars:
-        env_template += var + '=' + (config_feature_keywords[var]['default'] \
+        env_template += var[3:] + '=' + (config_feature_keywords[var]['default'] \
             if not config_feature_keywords[var]['secret'] else '') + '\n'
     if output_path:
         with open(output_path, 'w') as output_file:

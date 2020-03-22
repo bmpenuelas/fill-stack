@@ -59,8 +59,8 @@ services:
   {% endif %}
 
 
-  # {% if render_features['celery'] %}
-  # # Celery worker
+  {% if render_features['celery'] %}
+  # # TODO: Celery worker
   # worker:
   #   restart: always
   #   build:
@@ -84,7 +84,7 @@ services:
   #     - ENV_RABBIT_USER=${ENV_RABBIT_USER}
   #     - ENV_RABBIT_PASSWORD=${ENV_RABBIT_PASSWORD}
   #     {% endif %}
-  # {% endif %}
+  {% endif %}
 
 
   {% if render_features['redis-rabbit'] %}

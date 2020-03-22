@@ -53,7 +53,7 @@ The returned `access_token` is the one you can use from this moment on to authen
 
 | Header | Content |
 |---|---|
-Authorization | Bearer <your_access_token> |
+| Authorization | Bearer <your_access_token> |
 
 
 Now you can try requesting the included `/test` endpoint, which by default requires authentication:
@@ -77,15 +77,19 @@ More info on how to customize your settings at [github.io/django-rest-framework-
 ## AWS
 ### Steps to deploy to EC2 using docker-machine
 
+* Install [Docker](https://docs.docker.com/install/).
+
 * Install [Docker Machine](https://docs.docker.com/machine/install-machine/).
 
-* Install [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/install-linux-al2017.html).
+* Install [Docker Compose](https://docs.docker.com/compose/install/).
 
-* [Create a user](https://console.aws.amazon.com/iam/home?#users) and assign it a group with enough permissions.
+* Install [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
 
-* Enter the created credentials and desired [zone](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) in:
+* [Create a user](https://console.aws.amazon.com/iam/home?#users) and assign it Programmatic Access and a group with enough permissions.
 
-    `aws configure`
+* Note down the created Access key ID and Secret access key. Choose your preferred [zone](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html).
+
+    Run `aws configure` and enter them when prompted.
 
 
 * Start the new instance:
@@ -98,6 +102,21 @@ More info on how to customize your settings at [github.io/django-rest-framework-
 * Open the ports that you need (i.e HTTP, HTTPS...):
 
     *[EC2 dashboard](https://console.aws.amazon.com/ec2) > Security Groups > YourGroupName > Inbound / Outbound tabs*
+
+    Typical rules for HTTP and HTTPS traffic:
+
+    Inbound rules
+
+    | Type | Source type | Port range |
+    |---|---|---|
+    | HTTP | Anywhere | 80 |
+    | HTTPS | Anywhere | 443 |
+
+    Outbound rules
+
+    | Type | Source type | Port range |
+    |---|---|---|
+    | All traffic | Anywhere | All |
 
 
 * Activate it:
@@ -132,6 +151,16 @@ More info on how to customize your settings at [github.io/django-rest-framework-
     `docker-machine ssh <machine_name>`
 
 
+* List all containers
+
+    `docker-compose ps`
+
+
+* Attach your terminal to a docker container
+
+    `docker attach <container>`
+
+
 * Stop and rebuild all / a service
 
     `docker-compose up -d --no-deps --build <service_name>`
@@ -152,14 +181,15 @@ More info on how to customize your settings at [github.io/django-rest-framework-
     alias dmls='docker-machine ls'
     alias dmstart='docker-machine start'
     alias dmstop='docker-machine stop'
+    alias dmrcert='docker-machine regenerate-certs'
     alias dmip='docker-machine ip'
     alias dmssh='docker-machine ssh'
     alias dmrm='docker-machine rm'
 
-    function dmenv {
+    function dmactivate {
         eval $(docker-machine env $1)
     }
-    function dmenvrm {
+    function dmdeactivate {
         eval $(docker-machine env -u)
     }
     ```
@@ -182,6 +212,7 @@ Secrets example:
 
 Make sure you have *only one host* in that account, **all the hosts in the account will be updated** to the IP of the machine that runs this docker container.
 
+Cloudflare is a great option to develop together with No-IP, as it allows you to instantly change the DNS records, instead of taking hours to propagate the changes as is typical with domain registrars.
 
 
 {% endif %}
@@ -191,7 +222,7 @@ Make sure you have *only one host* in that account, **all the hosts in the accou
 
 You will have out-of-the-box https certicates issued, installed and renewed automatically.
 
-Just pay attention to the rate limits of LetsEncrypt, set your `.env` to `local` (*default*) or `staging` in order to not extinguish the limit. `staging` is great for developing once your project is online, but you are just testing, the certificate will be flagged as non-valid by the browser but you can accept it and continue to your site. Set it to `production` to get real certificates (*caution, the limit is quite low if you keep bringing up and down the container*). Find more details in the [docs](https://github.com/SteveLTN/https-portal).
+Just pay attention to the rate limits of LetsEncrypt, set your `.env` to `local` (*default*) or `staging` in order to not extinguish the limit. `staging` is great for developing, the certificate will be flagged as non-valid by the browser but you can accept it and continue to your site. Set it to `production` to get real certificates (*caution, the limit is quite low if you keep bringing up and down the container*). Find more details in the [docs](https://github.com/SteveLTN/https-portal).
 
 Example:
 ```
