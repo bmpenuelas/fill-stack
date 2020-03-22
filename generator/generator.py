@@ -17,6 +17,8 @@ from   generator.config_feature_paths    import config_feature_paths
 
 # Constants to be used elsewhere
 
+VERSION       = 'v0.1.0'
+
 BASE_PATH     = dirname(path.realpath(__file__))
 TEMPLATE_PATH = normpath(path.join(BASE_PATH, '..', 'templates'))
 
@@ -143,6 +145,15 @@ def gen_files(required_files, selected_features, selected_keywords, output_path)
         'selected_features': selected_features,
         'selected_keywords': selected_keywords,
     }
+
+    config['generator_info'] = {
+        'previous': {
+            'selected_features': selected_features,
+            'selected_keywords': selected_keywords,
+            'version': VERSION,
+        },
+    }
+
     config_path = path.join(output_path, '.fill-stack_config.json')
     with open(config_path, "w") as config_file:
         config_file.write(json.dumps(config, indent=4, sort_keys=True))
