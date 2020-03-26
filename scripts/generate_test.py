@@ -9,7 +9,7 @@ from   argparse import ArgumentParser
 
 root_path = abspath(join(dirname(abspath(__file__)),'..'))
 sys.path.append(root_path)
-from   generator.generator import run_cmd
+from   generator.generator import ALL_FEATURES, run_cmd, get_keyword_info
 from   generator.tests     import tests
 
 
@@ -49,6 +49,11 @@ parser.add_argument(
     help='Open VSCode instead of running.'
 )
 parser.add_argument(
+    '-ki', '--kwinfo', dest='kwinfo',
+    action='store_true',
+    help='Get all keywords info.'
+)
+parser.add_argument(
     '-cl', '--clean', dest='clean',
     action='store_true',
     help='Clean all output files.'
@@ -67,6 +72,9 @@ if args_dict['clean']:
     # Clean all generated files
     cmd_clean = ['git', 'clean', '-fdX']
     run_cmd(cmd_clean, True)
+
+elif args_dict['kwinfo']:
+    print(json.dumps(get_keyword_info(ALL_FEATURES)))
 
 else:
     # Generate files

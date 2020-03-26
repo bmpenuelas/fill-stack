@@ -115,6 +115,7 @@ available_features = {
 # these are replaced in the templates.
 #   'features': Features that require this keyword to be set.
 #   'environment': Is it an environment variable.
+#   'secret': To be set only offline.
 #   'name': Name in natural language, to be shown to the user.
 #   'description': Short description.
 #   'default': Default value.
@@ -127,9 +128,10 @@ config_feature_keywords = {
             ['common'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'Product name',
         'description': 'The name for your app or product.',
-        'default': 'MY_PRODUCT_NAME',
+        'default': 'mywebapp',
         'sanitize': r'^\w+$',
     },
     'FS_DOMAIN': {
@@ -137,9 +139,10 @@ config_feature_keywords = {
             ['common'],
         ],
         'environment': False,
-        'name': 'Main domian name',
-        'description': 'The domian of your webapp (your-name.com).',
-        'default': 'MY_DOMAIN.com',
+        'secret': False,
+        'name': 'Main domain name',
+        'description': 'The domain of your webapp (your-name.com).',
+        'default': 'mywebapp.com',
         'sanitize': r'^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$',
     },
     'FS_DOCKER_USERNAME': {
@@ -147,9 +150,10 @@ config_feature_keywords = {
             ['common'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'Docker username.',
         'description': 'Username to run the docker commands.',
-        'default': 'my_docker_username',
+        'default': 'dockeruser',
         'sanitize': r'^[a-z][-a-z0-9_]*$',
     },
 
@@ -174,7 +178,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Django secret key.',
         'description': 'Secret key for Django production. KEEP SECRET!',
-        'default': 'MY_ENV_DJANGO_SECRET_KEY',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_ENV_DJANGO_ADMIN_USER': {
@@ -185,7 +189,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Admin username',
         'description': 'Django superuser (admin) username.',
-        'default': 'MY_ENV_DJANGO_SECRET_KEY',
+        'default': 'djangoadmin',
         'sanitize': r'^.+$',
     },
     'FS_ENV_DJANGO_ADMIN_EMAIL': {
@@ -196,7 +200,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Admin email',
         'description': 'Django superuser (admin) email.',
-        'default': 'MY_ENV_DJANGO_SECRET_KEY',
+        'default': 'my@email.com',
         'sanitize': r'^.+$',
     },
     'FS_ENV_DJANGO_ADMIN_PASSWORD': {
@@ -207,7 +211,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Admin password',
         'description': 'Django superuser (admin) password.',
-        'default': 'MY_ENV_DJANGO_SECRET_KEY',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_DJANGO_PROJECT_NAME': {
@@ -215,9 +219,10 @@ config_feature_keywords = {
             ['django'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'Django project name',
         'description': 'Name of your Django project.',
-        'default': 'MY_DJANGO_PROJECT_NAME',
+        'default': 'myproject',
         'sanitize': r'^\w+$',
     },
     'FS_DJANGO_APP_NAME': {
@@ -225,9 +230,10 @@ config_feature_keywords = {
             ['django'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'Django app name',
         'description': 'Name of your Django app.',
-        'default': 'MY_DJANGO_APP_NAME',
+        'default': 'myapp',
         'sanitize': r'^\w+$',
     },
 
@@ -241,7 +247,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Client ID',
         'description': 'Social Authentication chosen client_id.',
-        'default': 'MY_ENV_DJANGO_SOCIALAUTH_CLIENT_ID',
+        'default': 'CLIENT_ID',
         'sanitize': r'^.+$',
     },
     'FS_ENV_DJANGO_SOCIALAUTH_CLIENT_SECRET': {
@@ -252,7 +258,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Client Secret',
         'description': 'Social Authentication chosen client_secret.',
-        'default': 'MY_ENV_DJANGO_SOCIALAUTH_CLIENT_SECRET',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID': {
@@ -260,9 +266,10 @@ config_feature_keywords = {
             ['django-socialauth'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'App ID',
         'description': 'Facebook App ID - Get one at developers.facebook.com/apps/ or add any number now and replace it with the real one later.',
-        'default': 'MY_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID',
+        'default': 'FB_APP_ID',
         'sanitize': r'^\d+$',
     },
     'FS_ENV_DJANGO_SOCIALAUTH_FACEBOOK_APP_SECRET': {
@@ -273,7 +280,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'App Secret',
         'description': 'Social Authentication - Facebook App Secret.',
-        'default': 'MY_ENV_DJANGO_SOCIALAUTH_FACEBOOK_APP_SECRET',
+        'default': 'FB_APP_SECRET',
         'sanitize': r'^.+$',
     },
 
@@ -287,7 +294,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'DB Name',
         'description': 'Postgresql database name.',
-        'default': 'MY_ENV_POSTGRES_DB_NAME',
+        'default': 'postgresdb',
         'sanitize': r'^\w+$',
     },
     'FS_ENV_POSTGRES_DB_USER': {
@@ -298,7 +305,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'DB User',
         'description': 'Postgresql database user.',
-        'default': 'MY_ENV_POSTGRES_DB_USER',
+        'default': 'postgresuser',
         'sanitize': r'^\w+$',
     },
     'FS_ENV_POSTGRES_DB_PASSWORD': {
@@ -309,7 +316,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'DB Password',
         'description': 'Postgresql database password.',
-        'default': 'MY_ENV_POSTGRES_DB_PASSWORD',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
 
@@ -323,7 +330,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Admin username.',
         'description': 'Rabbit Admin user.',
-        'default': 'MY_ENV_RABBIT_USER',
+        'default': 'rabbituser',
         'sanitize': r'^\w+$',
     },
     'FS_ENV_RABBIT_PASSWORD': {
@@ -334,7 +341,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Admin password.',
         'description': 'Rabbit Admin password.',
-        'default': 'MY_ENV_RABBIT_USER',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_REDIS_PORT': {
@@ -342,6 +349,7 @@ config_feature_keywords = {
             ['redis-rabbit'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'Port for Redis.',
         'description': 'Redis port number.',
         'default': '6379',
@@ -358,7 +366,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'mongodb root username.',
         'description': 'MongoDB root user.',
-        'default': 'MY_ENV_MONGO_ROOT_USERNAME',
+        'default': 'mongouser',
         'sanitize': r'^\w+$',
     },
     'FS_ENV_MONGO_ROOT_PASSWORD': {
@@ -369,7 +377,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'mongodb root password.',
         'description': 'MongoDB root password.',
-        'default': 'MY_ENV_MONGO_ROOT_PASSWORD',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_ENV_MONGO_DATABASE_NAME': {
@@ -380,7 +388,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'MongoDB database name.',
         'description': 'Create a mongodb database with this name.',
-        'default': 'MY_ENV_MONGO_DATABASE_NAME',
+        'default': 'mongodb',
         'sanitize': r'^\w+$',
     },
     'FS_MONGO_EXAMPLE_COLLECTION': {
@@ -388,9 +396,10 @@ config_feature_keywords = {
             ['mongodb'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'MongoDB example collection.',
         'description': 'Create a collection in the mongodb database.',
-        'default': 'MY_MONGO_EXAMPLE_COLLECTION',
+        'default': 'mycollection',
         'sanitize': r'^\w+$',
     },
     'FS_MONGO_EXAMPLE_FIELD': {
@@ -398,9 +407,10 @@ config_feature_keywords = {
             ['mongodb'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'MongoDB example field.',
         'description': 'Create a field in the mongodb example collection.',
-        'default': 'MY_MONGO_EXAMPLE_FIELD',
+        'default': 'myfield',
         'sanitize': r'^\w+$',
     },
     'FS_MONGO_EXAMPLE_VALUE': {
@@ -408,9 +418,10 @@ config_feature_keywords = {
             ['mongodb'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'MongoDB example value.',
         'description': 'Value of the mongodb example field.',
-        'default': 'MY_MONGO_EXAMPLE_VALUE',
+        'default': 'myvalue',
         'sanitize': r'^\w+$',
     },
 
@@ -424,7 +435,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Mongo-express admin panel username.',
         'description': 'Mongo-express admin panel user.',
-        'default': 'MY_ENV_MONGO_EXPRESS_USERNAME',
+        'default': 'mongoexpressuser',
         'sanitize': r'^\w+$',
     },
     'FS_ENV_MONGO_EXPRESS_PASSWORD': {
@@ -435,7 +446,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Mongo-express admin panel password.',
         'description': 'Mongo-express admin panel password.',
-        'default': 'MY_ENV_MONGO_EXPRESS_PASSWORD',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
 
@@ -446,9 +457,10 @@ config_feature_keywords = {
             ['vue'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'Vue project name.',
         'description': 'Name for the Vue.js frontend project.',
-        'default': 'MY_VUE_PROJECT_NAME',
+        'default': 'mywebapp',
         'sanitize': r'^\w+$',
     },
 
@@ -459,9 +471,10 @@ config_feature_keywords = {
             ['nginx'],
         ],
         'environment': False,
+        'secret': False,
         'name': 'API path',
         'description': 'Path to the API (my_api would make your API available in mydomain.com/my_api/',
-        'default': 'MY_API_PATH',
+        'default': 'api',
         'sanitize': r'^\w+$',
     },
 
@@ -490,7 +503,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'No-IP User.',
         'description': 'Username of your noip.com account.',
-        'default': 'MY_ENV_NOIP_USER',
+        'default': 'myNoIPuser',
         'sanitize': r'^\w+$',
     },
     'FS_ENV_NOIP_PASSWORD': {
@@ -501,7 +514,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'No-IP Password.',
         'description': 'Password of your noip.com account.',
-        'default': 'MY_ENV_NOIP_PASSWORD',
+        'default': 'CHANGE ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_ENV_NOIP_INTERVAL': {

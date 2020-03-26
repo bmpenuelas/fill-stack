@@ -87,6 +87,27 @@ def find_missing_keywords(selected_features, selected_keywords):
     return [item for item in required_keywords if not item in selected_keywords.keys()]
 
 
+def get_keyword_info(selected_features):
+    """ Get info for the user to choose the keywords """
+
+    keyword_info = {}
+    for feature in get_required_keywords(selected_features):
+        feature_cfg = config_feature_keywords[feature]
+        if feature_cfg['secret']:
+            continue
+        new_keyword_info = {
+            'name': feature_cfg['name'],
+            'description': feature_cfg['description'],
+            'default': feature_cfg['default'],
+        }
+        if feature_cfg['features'][0][0] in keyword_info:
+            keyword_info[feature_cfg['features'][0][0]][feature] = new_keyword_info
+        else:
+            keyword_info[feature_cfg['features'][0][0]] = {feature: new_keyword_info}
+
+    return keyword_info
+
+
 def get_required_files(selected_features):
     """ Find which template files are required for the selected features """
 
