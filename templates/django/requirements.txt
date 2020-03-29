@@ -12,7 +12,7 @@ redis
 djangorestframework-jwt
 {% endif %}
 {% if render_features['django-socialauth'] %}
--e git://github.com/bmpenuelas/django-rest-framework-social-oauth2.git@fix-rev-call#egg=rest_framework_social_oauth2
+-e git://github.com/RealmTeam/django-rest-framework-social-oauth2.git#egg=django_rest_framework_social_oauth2
 {% endif %}
 {% if render_features['django-celery'] %}
 celery

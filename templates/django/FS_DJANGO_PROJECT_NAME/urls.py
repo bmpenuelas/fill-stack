@@ -30,7 +30,7 @@ urlpatterns = [
     {% endif %}
 
     {% if render_features['django-socialauth'] %}
-    path('{{ FS_API_PATH }}/auth-social/', include('rest_framework_social_oauth2.urls', namespace='django-socialauth')),
+    path('{{ FS_API_PATH }}/auth-social/', include(('rest_framework_social_oauth2.urls', 'rest_framework_social_oauth2'), namespace='django-socialauth')),
     {% endif %}
 
     path('{{ FS_API_PATH }}/', include('{{ FS_DJANGO_APP_NAME }}.urls')),

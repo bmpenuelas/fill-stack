@@ -81,12 +81,11 @@ else:
     test_results = tests.main()
 
     if not any([test_results.errors, test_results.failures]):
-        templated_path = abspath(join('.', '.templated'))
+        templated_path = abspath(join(root_path, '.generated_test'))
 
-        if args_dict['secret']:
-            secret_env = join('./templates/', '.env.secret')
-            if isfile(secret_env):
-                copyfile(secret_env, join(templated_path, '.env'))
+        secret_env = join(root_path, 'templates', '.env.secret')
+        if isfile(secret_env):
+            copyfile(secret_env, join(templated_path, '.env'))
 
         if args_dict['code']:
             # Open directory in VSCode

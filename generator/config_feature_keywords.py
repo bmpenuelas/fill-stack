@@ -178,7 +178,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Django secret key.',
         'description': 'Secret key for Django production. KEEP SECRET!',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_ENV_DJANGO_ADMIN_USER': {
@@ -211,7 +211,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Admin password',
         'description': 'Django superuser (admin) password.',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_DJANGO_PROJECT_NAME': {
@@ -258,7 +258,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Client Secret',
         'description': 'Social Authentication chosen client_secret.',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID': {
@@ -316,7 +316,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'DB Password',
         'description': 'Postgresql database password.',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
 
@@ -341,7 +341,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Admin password.',
         'description': 'Rabbit Admin password.',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_REDIS_PORT': {
@@ -377,7 +377,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'mongodb root password.',
         'description': 'MongoDB root password.',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_ENV_MONGO_DATABASE_NAME': {
@@ -446,7 +446,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'Mongo-express admin panel password.',
         'description': 'Mongo-express admin panel password.',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
 
@@ -514,7 +514,7 @@ config_feature_keywords = {
         'secret': True,
         'name': 'No-IP Password.',
         'description': 'Password of your noip.com account.',
-        'default': 'CHANGE ME!!!',
+        'default': 'CHANGE_ME!!!',
         'sanitize': r'^.+$',
     },
     'FS_ENV_NOIP_INTERVAL': {

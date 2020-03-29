@@ -1,7 +1,7 @@
 import unittest
 import sys
 
-from   os        import path, walk
+from   os        import path, walk, environ
 from   os.path   import abspath, join, dirname
 from   shutil    import rmtree
 from   random    import Random
@@ -40,16 +40,13 @@ def create_TestGenerateFiles(seed):
 
         def test_all_features_selected(self):
             selected_keywords = {
-                keyword: keyword for keyword in ALL_KEYWORDS
+                keyword: config_feature_keywords[keyword]['default'] for keyword in ALL_KEYWORDS
                 if not config_feature_keywords[keyword]['environment']
             }
 
-            # Force values
-            for invalid_keyword in find_invalid_keywords(selected_keywords):
-                selected_keywords[invalid_keyword] = config_feature_keywords[invalid_keyword]['default']
-
-            selected_keywords['FS_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID'] = '0123456789012345'
-            selected_keywords['FS_DOMAIN'] = 'fill-stack.com'
+            # These must be set to valid values in your environment
+            selected_keywords['FS_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID'] = environ['FS_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID']
+            selected_keywords['FS_DOMAIN'] = environ['FS_DOMAIN']
 
             self.assertEqual(find_invalid_keywords(selected_keywords), [])
             self.assertTrue(check_required_keywords(ALL_FEATURES, selected_keywords))

@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="container-fluid">
+      <h1>
+        Facebook login using SocialAuth
+      </h1>
       <div class="row">
         <div class="login-buttons col-xs-12 col-md-6 clearfix">
           <button class="btn btn-default" @click="authenticate('facebook')">
@@ -53,6 +56,11 @@ export default {
 
 
 <style scoped lang=scss>
+.container-fluid {
+  margin: 100px auto 100px auto;
+  max-width: 700px;
+}
+
 .login-buttons {
   button {
     float: right;
