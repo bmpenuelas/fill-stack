@@ -3,7 +3,7 @@ import json
 import subprocess
 
 from   shutil   import copyfile
-from   os       import chdir
+from   os       import chdir, environ
 from   os.path  import abspath, join, isfile, dirname
 from   argparse import ArgumentParser
 
@@ -81,7 +81,7 @@ else:
     test_results = tests.main()
 
     if not any([test_results.errors, test_results.failures]):
-        templated_path = abspath(join(root_path, '.generated_test'))
+        templated_path = environ['FS_TEST_OUTPUT_PATH'] if ('FS_TEST_OUTPUT_PATH' in environ) else abspath(join(root_path, '.generated_test'))
 
         secret_env = join(root_path, 'templates', '.env.secret')
         if isfile(secret_env):

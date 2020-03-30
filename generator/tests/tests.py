@@ -3,7 +3,7 @@ import sys
 
 from   os        import path, walk, environ
 from   os.path   import abspath, join, dirname
-from   shutil    import rmtree
+from   shutil    import rmtree, copytree
 from   random    import Random
 
 root_path = abspath(join(dirname(abspath(__file__)), '..'))
@@ -30,13 +30,24 @@ def create_TestGenerateFiles(seed):
     random = Random(seed)
     gen_seed = random.randint(0, 2^32-1)
 
+
     class TCGenerateFiles(unittest.TestCase):
-        OUTPUT_PATH = path.normpath(path.join(root_path, '..', '.generated_test'))
+        OUTPUT_PATH = environ['FS_TEST_OUTPUT_PATH'] if ('FS_TEST_OUTPUT_PATH' in environ) else path.normpath(path.join(root_path, '..', '.generated_test'))
         seed = gen_seed
 
+
         def setUp(self):
-            if path.exists(self.OUTPUT_PATH):
-                rmtree(self.OUTPUT_PATH)
+            if not ('FS_TEST_OUTPUT_PRESERVE' in environ and environ['FS_TEST_OUTPUT_PRESERVE']) and path.exists(self.OUTPUT_PATH):
+                git_dir = path.join(self.OUTPUT_PATH, '.git')
+                temp_path = '~/temp/fs_test_output_path'
+                if path.exists(git_dir):
+                    copytree(git_dir, temp_path)
+                    rmtree(self.OUTPUT_PATH)
+                    copytree(temp_path, git_dir)
+                    rmtree(temp_path)
+                else:
+                    rmtree(self.OUTPUT_PATH)
+
 
         def test_all_features_selected(self):
             selected_keywords = {
@@ -78,6 +89,7 @@ def create_TestGenerateFiles(seed):
                 path_in_output = path.join(self.OUTPUT_PATH, get_templated(config_feature_paths[template_path]['template'], selected_keywords))
                 with self.subTest(path_in_output=path_in_output):
                     self.assertTrue(path.exists(path_in_output))
+
 
         def tearDown(self):
             pass

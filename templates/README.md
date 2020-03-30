@@ -32,7 +32,9 @@ Secrets example:
 
 Setup all the providers you want, and get the API secret tokens. Store those in your `.env` file.
 
-Example, for *login with Facebook*
+Example, for *login with Facebook*:
+
+Complete all the settings required by Facebook, including valid Domains for your webapp, and Valid OAuth Redirect URIs. While in development, you can also add 127.0.0.1 as a valid domain.
 
 - Choose ENV_DJANGO_SOCIALAUTH_CLIENT_ID (*recommended 40 characters long*) and ENV_DJANGO_SOCIALAUTH_CLIENT_SECRET (*recommended 128 characters long*)
 
