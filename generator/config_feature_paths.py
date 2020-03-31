@@ -623,6 +623,38 @@ config_feature_paths = {
         'update_relevant': True,
         'template': r'vue/{{ FS_VUE_PROJECT_NAME }}/src/components/SocialLogin.vue',
     },
+    'vue/FS_VUE_PROJECT_NAME/src/config/': {
+        'features': [
+            ['vue'],
+        ],
+        'binary': False,
+        'update_relevant': True,
+        'template': r'vue/{{ FS_VUE_PROJECT_NAME }}/src/config/',
+    },
+    'vue/FS_VUE_PROJECT_NAME/src/config/GlobalConfig.js': {
+        'features': [
+            ['vue'],
+        ],
+        'binary': False,
+        'update_relevant': True,
+        'template': r'vue/{{ FS_VUE_PROJECT_NAME }}/src/config/GlobalConfig.js',
+    },
+    'vue/FS_VUE_PROJECT_NAME/src/config/axios/': {
+        'features': [
+            ['vue'],
+        ],
+        'binary': False,
+        'update_relevant': True,
+        'template': r'vue/{{ FS_VUE_PROJECT_NAME }}/src/config/axios/',
+    },
+    'vue/FS_VUE_PROJECT_NAME/src/config/axios/AxiosInstance.js': {
+        'features': [
+            ['vue'],
+        ],
+        'binary': False,
+        'update_relevant': True,
+        'template': r'vue/{{ FS_VUE_PROJECT_NAME }}/src/config/axios/AxiosInstance.js',
+    },
     'vue/FS_VUE_PROJECT_NAME/src/views/': {
         'features': [
             ['vue'],
