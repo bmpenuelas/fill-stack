@@ -13,10 +13,9 @@ const baseConfig = {
 export const axiosAPI = axios.create(baseConfig)
 
 
-{% if render_features['noip'] %}
-var jwtInstance = axios.create(baseConfig)
+var instanceCSRF = axios.create(baseConfig)
 
-jwtInstance.interceptors.request.use(
+instanceCSRF.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
@@ -30,5 +29,4 @@ jwtInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-export const axiosJWT = jwtInstance
-{% endif %}
+export const axiosCSRF = instanceCSRF
