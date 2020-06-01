@@ -1,0 +1,309 @@
+{
+  "FS_PRODUCT_NAME": {
+    "features": [["common"]],
+    "environment": false,
+    "secret": false,
+    "name": "Product name",
+    "description": "The name for your app or product.",
+    "default": "mywebapp",
+    "sanitize": "^\\w+$"
+  },
+  "FS_DOMAIN": {
+    "features": [["common"]],
+    "environment": false,
+    "secret": false,
+    "name": "Main domain name",
+    "description": "The domain of your webapp (your-name.com).",
+    "default": "example.com",
+    "sanitize": "^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\\.)*(xn--)?([a-z0-9][a-z0-9\\-]{0,60}|[a-z0-9-]{1,30}\\.[a-z]{2,})$"
+  },
+  "FS_DOCKER_USERNAME": {
+    "features": [["common"]],
+    "environment": false,
+    "secret": false,
+    "name": "Docker username.",
+    "description": "Username to run the docker commands.",
+    "default": "dockeruser",
+    "sanitize": "^[a-z][-a-z0-9_]*$"
+  },
+  "FS_ENV_DJANGO_DEBUG": {
+    "features": [["django"]],
+    "environment": true,
+    "secret": false,
+    "name": "Django debug mode.",
+    "description": "Set to put Django in DEBUG mode. DO NOT SET IN PRODUCTION!",
+    "default": "True",
+    "sanitize": "(True|true|False|false)$"
+  },
+  "FS_ENV_DJANGO_SECRET_KEY": {
+    "features": [["django"]],
+    "environment": true,
+    "secret": true,
+    "name": "Django secret key.",
+    "description": "Secret key for Django production. KEEP SECRET!",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_DJANGO_ADMIN_USER": {
+    "features": [["django"]],
+    "environment": true,
+    "secret": true,
+    "name": "Admin username",
+    "description": "Django superuser (admin) username.",
+    "default": "djangoadmin",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_DJANGO_ADMIN_EMAIL": {
+    "features": [["django"]],
+    "environment": true,
+    "secret": true,
+    "name": "Admin email",
+    "description": "Django superuser (admin) email.",
+    "default": "my@email.com",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_DJANGO_ADMIN_PASSWORD": {
+    "features": [["django"]],
+    "environment": true,
+    "secret": true,
+    "name": "Admin password",
+    "description": "Django superuser (admin) password.",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_DJANGO_PROJECT_NAME": {
+    "features": [["django"]],
+    "environment": false,
+    "secret": false,
+    "name": "Django project name",
+    "description": "Name of your Django project.",
+    "default": "myproject",
+    "sanitize": "^\\w+$"
+  },
+  "FS_DJANGO_APP_NAME": {
+    "features": [["django"]],
+    "environment": false,
+    "secret": false,
+    "name": "Django app name",
+    "description": "Name of your Django app.",
+    "default": "myapp",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_DJANGO_SOCIALAUTH_CLIENT_ID": {
+    "features": [["django-socialauth"]],
+    "environment": true,
+    "secret": true,
+    "name": "Client ID",
+    "description": "Social Authentication chosen client_id.",
+    "default": "CLIENT_ID",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_DJANGO_SOCIALAUTH_CLIENT_SECRET": {
+    "features": [["django-socialauth"]],
+    "environment": true,
+    "secret": true,
+    "name": "Client Secret",
+    "description": "Social Authentication chosen client_secret.",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_DJANGO_SOCIALAUTH_FACEBOOK_APP_ID": {
+    "features": [["django-socialauth"]],
+    "environment": false,
+    "secret": false,
+    "name": "App ID",
+    "description": "Facebook App ID - Get one at developers.facebook.com/apps/ or add any number now and replace it with the real one later.",
+    "default": "01234567890123456789",
+    "sanitize": "^\\d+$"
+  },
+  "FS_ENV_DJANGO_SOCIALAUTH_FACEBOOK_APP_SECRET": {
+    "features": [["django-socialauth"]],
+    "environment": true,
+    "secret": true,
+    "name": "App Secret",
+    "description": "Social Authentication - Facebook App Secret.",
+    "default": "FB_APP_SECRET",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_POSTGRES_DB_NAME": {
+    "features": [["postgresql"]],
+    "environment": true,
+    "secret": true,
+    "name": "DB Name",
+    "description": "Postgresql database name.",
+    "default": "postgresdb",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_POSTGRES_DB_USER": {
+    "features": [["postgresql"]],
+    "environment": true,
+    "secret": true,
+    "name": "DB User",
+    "description": "Postgresql database user.",
+    "default": "postgresuser",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_POSTGRES_DB_PASSWORD": {
+    "features": [["postgresql"]],
+    "environment": true,
+    "secret": true,
+    "name": "DB Password",
+    "description": "Postgresql database password.",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_RABBIT_USER": {
+    "features": [["redis-rabbit"]],
+    "environment": true,
+    "secret": true,
+    "name": "Admin username.",
+    "description": "Rabbit Admin user.",
+    "default": "rabbituser",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_RABBIT_PASSWORD": {
+    "features": [["redis-rabbit"]],
+    "environment": true,
+    "secret": true,
+    "name": "Admin password.",
+    "description": "Rabbit Admin password.",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_REDIS_PORT": {
+    "features": [["redis-rabbit"]],
+    "environment": false,
+    "secret": false,
+    "name": "Port for Redis.",
+    "description": "Redis port number.",
+    "default": "6379",
+    "sanitize": "^\\d+$"
+  },
+  "FS_ENV_MONGO_ROOT_USERNAME": {
+    "features": [["mongodb"]],
+    "environment": true,
+    "secret": true,
+    "name": "mongodb root username.",
+    "description": "MongoDB root user.",
+    "default": "mongouser",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_MONGO_ROOT_PASSWORD": {
+    "features": [["mongodb"]],
+    "environment": true,
+    "secret": true,
+    "name": "mongodb root password.",
+    "description": "MongoDB root password.",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_MONGO_DATABASE_NAME": {
+    "features": [["mongodb"]],
+    "environment": true,
+    "secret": true,
+    "name": "MongoDB database name.",
+    "description": "Create a mongodb database with this name.",
+    "default": "mongodb",
+    "sanitize": "^\\w+$"
+  },
+  "FS_MONGO_EXAMPLE_COLLECTION": {
+    "features": [["mongodb"]],
+    "environment": false,
+    "secret": false,
+    "name": "MongoDB example collection.",
+    "description": "Create a collection in the mongodb database.",
+    "default": "mycollection",
+    "sanitize": "^\\w+$"
+  },
+  "FS_MONGO_EXAMPLE_FIELD": {
+    "features": [["mongodb"]],
+    "environment": false,
+    "secret": false,
+    "name": "MongoDB example field.",
+    "description": "Create a field in the mongodb example collection.",
+    "default": "myfield",
+    "sanitize": "^\\w+$"
+  },
+  "FS_MONGO_EXAMPLE_VALUE": {
+    "features": [["mongodb"]],
+    "environment": false,
+    "secret": false,
+    "name": "MongoDB example value.",
+    "description": "Value of the mongodb example field.",
+    "default": "myvalue",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_MONGO_EXPRESS_USERNAME": {
+    "features": [["mongo-express"]],
+    "environment": true,
+    "secret": true,
+    "name": "Mongo-express admin panel username.",
+    "description": "Mongo-express admin panel user.",
+    "default": "mongoexpressuser",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_MONGO_EXPRESS_PASSWORD": {
+    "features": [["mongo-express"]],
+    "environment": true,
+    "secret": true,
+    "name": "Mongo-express admin panel password.",
+    "description": "Mongo-express admin panel password.",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_VUE_PROJECT_NAME": {
+    "features": [["vue"]],
+    "environment": false,
+    "secret": false,
+    "name": "Vue project name.",
+    "description": "Name for the Vue.js frontend project.",
+    "default": "mywebapp",
+    "sanitize": "^\\w+$"
+  },
+  "FS_API_PATH": {
+    "features": [["nginx"]],
+    "environment": false,
+    "secret": false,
+    "name": "API path",
+    "description": "Path to the API (my_api would make your API available in mydomain.com/my_api/",
+    "default": "api",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_HTTPS_PORTAL_STAGE": {
+    "features": [["https-portal"]],
+    "environment": true,
+    "secret": false,
+    "name": "https certificates stage",
+    "description": "Use real, staging or self-signed SSL/TLS certificates (to avoid rate-limit).",
+    "choices": ["local", "staging", "production"],
+    "default": "local",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_NOIP_USER": {
+    "features": [["noip"]],
+    "environment": true,
+    "secret": true,
+    "name": "No-IP User.",
+    "description": "Username of your noip.com account.",
+    "default": "myNoIPuser",
+    "sanitize": "^\\w+$"
+  },
+  "FS_ENV_NOIP_PASSWORD": {
+    "features": [["noip"]],
+    "environment": true,
+    "secret": true,
+    "name": "No-IP Password.",
+    "description": "Password of your noip.com account.",
+    "default": "CHANGE_ME!!!",
+    "sanitize": "^.+$"
+  },
+  "FS_ENV_NOIP_INTERVAL": {
+    "features": [["noip"]],
+    "environment": true,
+    "secret": false,
+    "name": "No-IP Interval.",
+    "description": "Time between DDNS IP updates.",
+    "default": "5m",
+    "sanitize": "^\\w+$"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "django": { "force_if": [] },
+  "django-gunicorn": { "force_if": ["django"] },
+  "django-postgresql": { "force_if": [] },
+  "django-jwt": { "force_if": [] },
+  "django-socialauth": { "force_if": [] },
+  "django-celery": { "force_if": [] },
+  "django-redis-rabbit": { "force_if": [["django-celery"]] },
+  "postgresql": { "force_if": [["django-postgresql"]] },
+  "celery": { "force_if": [["django-celery"]] },
+  "redis-rabbit": { "force_if": [["django-redis-rabbit"]] },
+  "mongodb": { "force_if": [[]] },
+  "mongo-express": { "force_if": [[]] },
+  "nginx": { "force_if": [[]] },
+  "https-portal": { "force_if": [[]] },
+  "dev-hosts": { "force_if": [[]] },
+  "noip": { "force_if": [[]] },
+  "vue": { "force_if": [[]] },
+  "vue-socialauth": { "force_if": [[]] },
+  "aws-docker-machine": { "force_if": [[]] }
+}
